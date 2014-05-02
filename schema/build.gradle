@@ -1,23 +1,24 @@
 configurations {
     jaxb
+    provided
+    provided.extendsFrom(compile)
 }
-
-ext.axiomVersion = "1.2.14"
-ext.jaxbVersion = "2.2.7"
-ext.jaxbBasicVersion = "0.6.5"
 
 ext.schemaDir = "${projectDir}/src/main/resources/xsd"
 ext.schemas   = ['**/*.xsd']
 ext.bindings  = ['**/*.jxb']
-ext.generatedXSDSourcesDir = "${buildDir}/generated-sources/xsd"
+ext.generatedXSDSourcesDir = "generated-sources/xsd"
 ext.wsdlDir = "${projectDir}/src/main/resources/wsdl"
 ext.wsdls     = ['**/*.wsdl']
-ext.generatedWSDLSourcesDir = "${buildDir}/generated-sources/wsdl"
+ext.generatedWSDLSourcesDir = "generated-sources/wsdl"
 
-apply plugin: 'groovy'
+apply plugin: 'idea'
 
-repositories {
-    mavenCentral()
+idea{
+    module {
+        sourceDirs += file("${generatedXSDSourcesDir}")
+        sourceDirs += file("${generatedWSDLSourcesDir}")
+    }
 }
 
 sourceSets {
@@ -64,7 +65,7 @@ dependencies{
 
 task genJaxb << {
 
-    println configurations.jaxb.asPath
+//    println configurations.jaxb.asPath
     ant {
         taskdef name: "xjc",
                 classname: "com.sun.tools.xjc.XJC2Task",
@@ -94,4 +95,8 @@ task genJaxb << {
 compileJava{
     source sourceSets.main.java
     dependsOn genJaxb
+}
+clean{
+    delete generatedWSDLSourcesDir
+    delete generatedXSDSourcesDir
 }

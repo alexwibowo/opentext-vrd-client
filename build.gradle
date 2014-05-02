@@ -1,4 +1,5 @@
 allprojects {
+    apply plugin: 'idea'
 	apply plugin: 'groovy'
 	
 	ext.groovyVersion = "2.2.2"
@@ -14,4 +15,10 @@ allprojects {
 	repositories {
 	    mavenCentral()
 	}
+
+    idea{
+        module{
+            downloadSources = true
+        }
+    }
 }
