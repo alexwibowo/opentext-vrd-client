@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<jxb:bindings
+        xmlns:xs="http://www.w3.org/2001/XMLSchema"
+        xmlns:jxb="http://java.sun.com/xml/ns/jaxb"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://java.sun.com/xml/ns/jaxb http://java.sun.com/xml/ns/jaxb/bindingschema_2_0.xsd"
+        version="2.1">
+
+        <jxb:bindings schemaLocation="VignetteQuery.xsd">
+            <jxb:bindings node="//xs:simpleType[@name='OperType']/xs:restriction/xs:enumeration[@value='>']">
+                <jxb:typesafeEnumMember name="GREATER_THAN"/>
+            </jxb:bindings>
+            <jxb:bindings node="//xs:simpleType[@name='OperType']/xs:restriction/xs:enumeration[@value='&lt;']">
+                <jxb:typesafeEnumMember name="LESS_THAN"/>
+            </jxb:bindings>
+            <jxb:bindings node="//xs:simpleType[@name='OperType']/xs:restriction/xs:enumeration[@value='>=']">
+                <jxb:typesafeEnumMember name="GREATER_THAN_OR_EQUAL_TO"/>
+            </jxb:bindings>
+            <jxb:bindings node="//xs:simpleType[@name='OperType']/xs:restriction/xs:enumeration[@value='&lt;=']">
+                <jxb:typesafeEnumMember name="LESS_THAN_OR_EQUAL_TO"/>
+            </jxb:bindings>
+            <jxb:bindings node="//xs:simpleType[@name='OperType']/xs:restriction/xs:enumeration[@value='=']">
+                <jxb:typesafeEnumMember name="EQUAL_TO"/>
+            </jxb:bindings>
+            <jxb:bindings node="//xs:simpleType[@name='OperType']/xs:restriction/xs:enumeration[@value='!=']">
+                <jxb:typesafeEnumMember name="NOT_EQUAL_TO"/>
+            </jxb:bindings>
+        </jxb:bindings>
+
+</jxb:bindings>

@@ -1,0 +1,1641 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions targetNamespace="http://record.webservices.rd.vignette.com/"
+                  xmlns:impl="http://record.webservices.rd.vignette.com/"
+                  xmlns:intf="http://record.webservices.rd.vignette.com/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <!--WSDL created by Apache Axis version: 1.4
+Built on Apr 18, 2008 (03:44:33 CDT)-->
+    <wsdl:types>
+        <schema targetNamespace="http://record.webservices.rd.vignette.com/" xmlns="http://www.w3.org/2001/XMLSchema">
+            <element name="login">
+                <complexType>
+                    <sequence>
+                        <element name="user" type="xsd:string"/>
+                        <element name="password" type="xsd:string"/>
+                        <element name="product" type="xsd:string"/>
+                        <element maxOccurs="unbounded" name="options" type="impl:NameValue"/>
+                    </sequence>
+                </complexType>
+            </element>
+            <complexType name="NameValue">
+                <sequence>
+                    <element name="name" type="xsd:string"/>
+                    <element name="value" nillable="true" type="xsd:string"/>
+                </sequence>
+            </complexType>
+            <element name="loginResponse">
+                <complexType>
+                    <sequence>
+                        <element name="license" type="xsd:string"/>
+                    </sequence>
+                </complexType>
+            </element>
+            <complexType name="StackTrace">
+                <sequence>
+                    <element maxOccurs="unbounded" minOccurs="0" name="item" type="xsd:string"/>
+                </sequence>
+            </complexType>
+            <complexType name="InvalidCredentialsException">
+                <sequence>
+                    <element name="detail" type="xsd:string"/>
+                    <element name="wsName" type="xsd:string"/>
+                    <element name="wsMethodName" type="xsd:string"/>
+                    <element name="callStack" nillable="true" type="impl:StackTrace"/>
+                </sequence>
+            </complexType>
+            <element name="InvalidCredentialsException" type="impl:InvalidCredentialsException"/>
+            <complexType name="NoAvailableLicenseException">
+                <sequence>
+                    <element name="detail" type="xsd:string"/>
+                    <element name="wsName" type="xsd:string"/>
+                    <element name="wsMethodName" type="xsd:string"/>
+                    <element name="callStack" nillable="true" type="impl:StackTrace"/>
+                </sequence>
+            </complexType>
+            <element name="NoAvailableLicenseException" type="impl:NoAvailableLicenseException"/>
+            <complexType name="GeneralException">
+                <sequence>
+                    <element name="detail" type="xsd:string"/>
+                    <element name="wsName" type="xsd:string"/>
+                    <element name="wsMethodName" type="xsd:string"/>
+                    <element name="callStack" nillable="true" type="impl:StackTrace"/>
+                </sequence>
+            </complexType>
+            <element name="GeneralException" type="impl:GeneralException"/>
+            <complexType name="InvalidParameterException">
+                <sequence>
+                    <element name="detail" type="xsd:string"/>
+                    <element name="wsName" type="xsd:string"/>
+                    <element name="wsMethodName" type="xsd:string"/>
+                    <element name="callStack" nillable="true" type="impl:StackTrace"/>
+                    <element name="parameterName" type="xsd:string"/>
+                    <element name="parameterValue" nillable="true" type="xsd:string"/>
+                </sequence>
+            </complexType>
+            <element name="InvalidParameterException" type="impl:InvalidParameterException"/>
+            <element name="logout">
+                <complexType>
+                    <sequence>
+                        <element name="license" type="xsd:string"/>
+                    </sequence>
+                </complexType>
+            </element>
+            <element name="logoutResponse">
+                <complexType/>
+            </element>
+            <complexType name="LicenseException">
+                <sequence>
+                    <element name="detail" type="xsd:string"/>
+                    <element name="wsName" type="xsd:string"/>
+                    <element name="wsMethodName" type="xsd:string"/>
+                    <element name="callStack" nillable="true" type="impl:StackTrace"/>
+                </sequence>
+            </complexType>
+            <element name="LicenseException" type="impl:LicenseException"/>
+            <element name="isValid">
+                <complexType>
+                    <sequence>
+                        <element name="license" type="xsd:string"/>
+                    </sequence>
+                </complexType>
+            </element>
+            <element name="isValidResponse">
+                <complexType>
+                    <sequence>
+                        <element name="valid" type="xsd:boolean"/>
+                    </sequence>
+                </complexType>
+            </element>
+            <element name="isUserInGroup">
+                <complexType>
+                    <sequence>
+                        <element name="user" type="xsd:string"/>
+                        <element name="group" type="xsd:string"/>
+                    </sequence>
+                </complexType>
+            </element>
+            <element name="isUserInGroupResponse">
+                <complexType>
+                    <sequence>
+                        <element name="inGroup" type="xsd:boolean"/>
+                    </sequence>
+                </complexType>
+            </element>
+            <element name="addCaseMapped">
+                <complexType>
+                    <sequence>
+                        <element name="license" type="xsd:string"/>
+                        <element name="caseSourceName" type="xsd:string"/>
+                        <element name="caseSourceMappingName" type="xsd:string"/>
+                        <element maxOccurs="unbounded" name="attributes" type="impl:NameValue"/>
+                        <element name="content" type="impl:ContentSection"/>
+                        <element maxOccurs="unbounded" name="options" type="impl:NameValue"/>
+                    </sequence>
+                </complexType>
+            </element>
+            <complexType name="ContentSection">
+                <sequence>
+                    <element name="sectionID" nillable="true" type="xsd:string"/>
+                    <element name="sectionData" type="xsd:base64Binary"/>
+                    <element name="renditionType" nillable="true" type="xsd:string"/>
+                    <element name="mimeType" nillable="true" type="xsd:string"/>
+                    <element name="fileExtn" nillable="true" type="xsd:string"/>
+                </sequence>
+            </complexType>
+            <element name="addCaseMappedResponse">
+                <complexType>
+                    <sequence>
+                        <element name="caseDesc" type="impl:CaseDescriptor"/>
+                    </sequence>
+                </complexType>
+            </element>
+            <complexType name="CaseDescriptor">
+                <sequence>
+                    <element name="caseID" type="xsd:string"/>
+                    <element name="caseKey" type="xsd:string"/>
+                    <element name="reserved" type="xsd:base64Binary"/>
+                </sequence>
+            </complexType>
+            <element name="addRecordMapped">
+                <complexType>
+                    <sequence>
+                        <element name="license" type="xsd:string"/>
+                        <element name="docSourceName" type="xsd:string"/>
+                        <element name="sourceVREF" type="xsd:string"/>
+                        <element maxOccurs="unbounded" name="attributes" type="impl:NameValue"/>
+                        <element name="content" type="impl:ContentSection"/>
+                        <element maxOccurs="unbounded" name="options" type="impl:NameValue"/>
+                    </sequence>
+                </complexType>
+            </element>
+            <element name="addRecordMappedResponse">
+                <complexType>
+                    <sequence>
+                        <element name="recDesc" type="impl:RecordDescriptor"/>
+                    </sequence>
+                </complexType>
+            </element>
+            <complexType name="RecordDescriptor">
+                <sequence>
+                    <element name="recordID" type="xsd:string"/>
+                    <element name="recordType" type="xsd:string"/>
+                    <element name="reserved" type="xsd:base64Binary"/>
+                </sequence>
+            </complexType>
+            <element name="addMultiSectionRecordMapped">
+                <complexType>
+                    <sequence>
+                        <element name="license" type="xsd:string"/>
+                        <element name="docSourceName" type="xsd:string"/>
+                        <element name="sourceVREF" type="xsd:string"/>
+                        <element maxOccurs="unbounded" name="attributes" type="impl:NameValue"/>
+                        <element maxOccurs="unbounded" name="content" type="impl:ContentSection"/>
+                        <element maxOccurs="unbounded" name="options" type="impl:NameValue"/>
+                    </sequence>
+                </complexType>
+            </element>
+            <element name="addMultiSectionRecordMappedResponse">
+                <complexType>
+                    <sequence>
+                        <element name="recDesc" type="impl:RecordDescriptor"/>
+                    </sequence>
+                </complexType>
+            </element>
+            <element name="addRendition">
+                <complexType>
+                    <sequence>
+                        <element name="license" type="xsd:string"/>
+                        <element name="recordID" type="xsd:string"/>
+                        <element name="content" type="impl:ContentSection"/>
+                    </sequence>
+                </complexType>
+            </element>
+            <element name="addRenditionResponse">
+                <complexType>
+                    <sequence>
+                        <element name="reserved" type="xsd:base64Binary"/>
+                    </sequence>
+                </complexType>
+            </element>
+            <complexType name="UnknownRecordIDException">
+                <sequence>
+                    <element name="detail" type="xsd:string"/>
+                    <element name="wsName" type="xsd:string"/>
+                    <element name="wsMethodName" type="xsd:string"/>
+                    <element name="callStack" nillable="true" type="impl:StackTrace"/>
+                    <element name="recordID" type="xsd:string"/>
+                </sequence>
+            </complexType>
+            <element name="UnknownRecordIDException" type="impl:UnknownRecordIDException"/>
+            <complexType name="UnknownSectionException">
+                <sequence>
+                    <element name="detail" type="xsd:string"/>
+                    <element name="wsName" type="xsd:string"/>
+                    <element name="wsMethodName" type="xsd:string"/>
+                    <element name="callStack" nillable="true" type="impl:StackTrace"/>
+                    <element name="recordID" type="xsd:string"/>
+                    <element name="section" type="xsd:string"/>
+                </sequence>
+            </complexType>
+            <element name="UnknownSectionException" type="impl:UnknownSectionException"/>
+            <element name="addVersion">
+                <complexType>
+                    <sequence>
+                        <element name="license" type="xsd:string"/>
+                        <element name="recordID" type="xsd:string"/>
+                        <element name="content" type="impl:ContentSection"/>
+                    </sequence>
+                </complexType>
+            </element>
+            <element name="addVersionResponse">
+                <complexType>
+                    <sequence>
+                        <element name="reserved" type="xsd:base64Binary"/>
+                    </sequence>
+                </complexType>
+            </element>
+            <element name="getRendition">
+                <complexType>
+                    <sequence>
+                        <element name="license" type="xsd:string"/>
+                        <element name="recordID" type="xsd:string"/>
+                        <element name="section" type="xsd:string"/>
+                        <element name="subSection" type="xsd:string"/>
+                        <element name="renditionType" type="xsd:string"/>
+                        <element name="version" type="xsd:string"/>
+                        <element maxOccurs="unbounded" name="options" type="impl:NameValue"/>
+                    </sequence>
+                </complexType>
+            </element>
+            <element name="getRenditionResponse">
+                <complexType>
+                    <sequence>
+                        <element name="content" type="impl:ContentSection"/>
+                    </sequence>
+                </complexType>
+            </element>
+            <complexType name="UnknownSubSectionException">
+                <sequence>
+                    <element name="detail" type="xsd:string"/>
+                    <element name="wsName" type="xsd:string"/>
+                    <element name="wsMethodName" type="xsd:string"/>
+                    <element name="callStack" nillable="true" type="impl:StackTrace"/>
+                    <element name="recordID" type="xsd:string"/>
+                    <element name="section" type="xsd:string"/>
+                    <element name="subSection" type="xsd:string"/>
+                </sequence>
+            </complexType>
+            <element name="UnknownSubSectionException" type="impl:UnknownSubSectionException"/>
+            <element name="getUITemplate">
+                <complexType>
+                    <sequence>
+                        <element name="license" type="xsd:string"/>
+                        <element name="xmlParmaters" type="xsd:string"/>
+                        <element name="outType" type="xsd:long"/>
+                    </sequence>
+                </complexType>
+            </element>
+            <element name="getUITemplateResponse">
+                <complexType>
+                    <sequence>
+                        <element name="template" type="xsd:string"/>
+                    </sequence>
+                </complexType>
+            </element>
+            <complexType name="UnknownTemplateException">
+                <sequence>
+                    <element name="detail" type="xsd:string"/>
+                    <element name="wsName" type="xsd:string"/>
+                    <element name="wsMethodName" type="xsd:string"/>
+                    <element name="callStack" nillable="true" type="impl:StackTrace"/>
+                    <element name="templateName" type="xsd:string"/>
+                </sequence>
+            </complexType>
+            <element name="UnknownTemplateException" type="impl:UnknownTemplateException"/>
+            <element name="execute">
+                <complexType>
+                    <sequence>
+                        <element name="license" type="xsd:string"/>
+                        <element name="xmlRequest" type="xsd:string"/>
+                    </sequence>
+                </complexType>
+            </element>
+            <element name="executeResponse">
+                <complexType>
+                    <sequence>
+                        <element name="xmlResult" type="xsd:string"/>
+                    </sequence>
+                </complexType>
+            </element>
+            <element name="triggerRecordContainerDisposition">
+                <complexType>
+                    <sequence>
+                        <element name="license" type="xsd:string"/>
+                        <element name="recordID" type="xsd:string"/>
+                    </sequence>
+                </complexType>
+            </element>
+            <element name="triggerRecordContainerDispositionResponse">
+                <complexType/>
+            </element>
+            <element name="triggerContainerDisposition">
+                <complexType>
+                    <sequence>
+                        <element name="license" type="xsd:string"/>
+                        <element name="conatinerID" type="xsd:string"/>
+                    </sequence>
+                </complexType>
+            </element>
+            <element name="triggerContainerDispositionResponse">
+                <complexType/>
+            </element>
+            <complexType name="UnknownContainerIDException">
+                <sequence>
+                    <element name="detail" type="xsd:string"/>
+                    <element name="wsName" type="xsd:string"/>
+                    <element name="wsMethodName" type="xsd:string"/>
+                    <element name="callStack" nillable="true" type="impl:StackTrace"/>
+                    <element name="containerID" type="xsd:string"/>
+                </sequence>
+            </complexType>
+            <element name="UnknownContainerIDException" type="impl:UnknownContainerIDException"/>
+            <element name="triggerRecordDisposition">
+                <complexType>
+                    <sequence>
+                        <element name="license" type="xsd:string"/>
+                        <element name="recordID" type="xsd:string"/>
+                    </sequence>
+                </complexType>
+            </element>
+            <element name="triggerRecordDispositionResponse">
+                <complexType/>
+            </element>
+        </schema>
+    </wsdl:types>
+
+    <wsdl:message name="addVersionResponse">
+
+        <wsdl:part element="impl:addVersionResponse" name="parameters"/>
+
+    </wsdl:message>
+
+    <wsdl:message name="getUITemplateResponse">
+
+        <wsdl:part element="impl:getUITemplateResponse" name="parameters"/>
+
+    </wsdl:message>
+
+    <wsdl:message name="UnknownSectionException">
+
+        <wsdl:part element="impl:UnknownSectionException" name="UnknownSectionException"/>
+
+    </wsdl:message>
+
+    <wsdl:message name="UnknownOptionNameException">
+
+    </wsdl:message>
+
+    <wsdl:message name="addCaseMappedRequest">
+
+        <wsdl:part element="impl:addCaseMapped" name="parameters"/>
+
+    </wsdl:message>
+
+    <wsdl:message name="PasswordExpiredException">
+
+    </wsdl:message>
+
+    <wsdl:message name="executeResponse">
+
+        <wsdl:part element="impl:executeResponse" name="parameters"/>
+
+    </wsdl:message>
+
+    <wsdl:message name="PermissionException">
+
+    </wsdl:message>
+
+    <wsdl:message name="UnknownContentTypeException">
+
+    </wsdl:message>
+
+    <wsdl:message name="UnknownRecordIDException">
+
+        <wsdl:part element="impl:UnknownRecordIDException" name="UnknownRecordIDException"/>
+
+    </wsdl:message>
+
+    <wsdl:message name="isValidResponse">
+
+        <wsdl:part element="impl:isValidResponse" name="parameters"/>
+
+    </wsdl:message>
+
+    <wsdl:message name="UnknownOptionValueException">
+
+    </wsdl:message>
+
+    <wsdl:message name="getRenditionResponse">
+
+        <wsdl:part element="impl:getRenditionResponse" name="parameters"/>
+
+    </wsdl:message>
+
+    <wsdl:message name="addRenditionResponse">
+
+        <wsdl:part element="impl:addRenditionResponse" name="parameters"/>
+
+    </wsdl:message>
+
+    <wsdl:message name="GeneralException">
+
+        <wsdl:part element="impl:GeneralException" name="GeneralException"/>
+
+    </wsdl:message>
+
+    <wsdl:message name="triggerContainerDispositionResponse">
+
+        <wsdl:part element="impl:triggerContainerDispositionResponse" name="parameters"/>
+
+    </wsdl:message>
+
+    <wsdl:message name="addRenditionRequest">
+
+        <wsdl:part element="impl:addRendition" name="parameters"/>
+
+    </wsdl:message>
+
+    <wsdl:message name="InvalidParameterException">
+
+        <wsdl:part element="impl:InvalidParameterException" name="InvalidParameterException"/>
+
+    </wsdl:message>
+
+    <wsdl:message name="UnknownSubSectionException">
+
+        <wsdl:part element="impl:UnknownSubSectionException" name="UnknownSubSectionException"/>
+
+    </wsdl:message>
+
+    <wsdl:message name="addVersionRequest">
+
+        <wsdl:part element="impl:addVersion" name="parameters"/>
+
+    </wsdl:message>
+
+    <wsdl:message name="LicenseException">
+
+        <wsdl:part element="impl:LicenseException" name="LicenseException"/>
+
+    </wsdl:message>
+
+    <wsdl:message name="UnknownContainerIDException">
+
+        <wsdl:part element="impl:UnknownContainerIDException" name="UnknownContainerIDException"/>
+
+    </wsdl:message>
+
+    <wsdl:message name="isUserInGroupRequest">
+
+        <wsdl:part element="impl:isUserInGroup" name="parameters"/>
+
+    </wsdl:message>
+
+    <wsdl:message name="addMultiSectionRecordMappedResponse">
+
+        <wsdl:part element="impl:addMultiSectionRecordMappedResponse" name="parameters"/>
+
+    </wsdl:message>
+
+    <wsdl:message name="isUserInGroupResponse">
+
+        <wsdl:part element="impl:isUserInGroupResponse" name="parameters"/>
+
+    </wsdl:message>
+
+    <wsdl:message name="loginRequest">
+
+        <wsdl:part element="impl:login" name="parameters"/>
+
+    </wsdl:message>
+
+    <wsdl:message name="addCaseMappedResponse">
+
+        <wsdl:part element="impl:addCaseMappedResponse" name="parameters"/>
+
+    </wsdl:message>
+
+    <wsdl:message name="addRecordMappedResponse">
+
+        <wsdl:part element="impl:addRecordMappedResponse" name="parameters"/>
+
+    </wsdl:message>
+
+    <wsdl:message name="getRenditionRequest">
+
+        <wsdl:part element="impl:getRendition" name="parameters"/>
+
+    </wsdl:message>
+
+    <wsdl:message name="addRecordMappedRequest">
+
+        <wsdl:part element="impl:addRecordMapped" name="parameters"/>
+
+    </wsdl:message>
+
+    <wsdl:message name="triggerRecordDispositionRequest">
+
+        <wsdl:part element="impl:triggerRecordDisposition" name="parameters"/>
+
+    </wsdl:message>
+
+    <wsdl:message name="executeRequest">
+
+        <wsdl:part element="impl:execute" name="parameters"/>
+
+    </wsdl:message>
+
+    <wsdl:message name="addMultiSectionRecordMappedRequest">
+
+        <wsdl:part element="impl:addMultiSectionRecordMapped" name="parameters"/>
+
+    </wsdl:message>
+
+    <wsdl:message name="triggerRecordContainerDispositionResponse">
+
+        <wsdl:part element="impl:triggerRecordContainerDispositionResponse" name="parameters"/>
+
+    </wsdl:message>
+
+    <wsdl:message name="triggerRecordDispositionResponse">
+
+        <wsdl:part element="impl:triggerRecordDispositionResponse" name="parameters"/>
+
+    </wsdl:message>
+
+    <wsdl:message name="logoutRequest">
+
+        <wsdl:part element="impl:logout" name="parameters"/>
+
+    </wsdl:message>
+
+    <wsdl:message name="InvalidCredentialsException">
+
+        <wsdl:part element="impl:InvalidCredentialsException" name="InvalidCredentialsException"/>
+
+    </wsdl:message>
+
+    <wsdl:message name="UnknownTemplateException">
+
+        <wsdl:part element="impl:UnknownTemplateException" name="UnknownTemplateException"/>
+
+    </wsdl:message>
+
+    <wsdl:message name="getUITemplateRequest">
+
+        <wsdl:part element="impl:getUITemplate" name="parameters"/>
+
+    </wsdl:message>
+
+    <wsdl:message name="NoAvailableLicenseException">
+
+        <wsdl:part element="impl:NoAvailableLicenseException" name="NoAvailableLicenseException"/>
+
+    </wsdl:message>
+
+    <wsdl:message name="logoutResponse">
+
+        <wsdl:part element="impl:logoutResponse" name="parameters"/>
+
+    </wsdl:message>
+
+    <wsdl:message name="loginResponse">
+
+        <wsdl:part element="impl:loginResponse" name="parameters"/>
+
+    </wsdl:message>
+
+    <wsdl:message name="triggerContainerDispositionRequest">
+
+        <wsdl:part element="impl:triggerContainerDisposition" name="parameters"/>
+
+    </wsdl:message>
+
+    <wsdl:message name="isValidRequest">
+
+        <wsdl:part element="impl:isValid" name="parameters"/>
+
+    </wsdl:message>
+
+    <wsdl:message name="triggerRecordContainerDispositionRequest">
+
+        <wsdl:part element="impl:triggerRecordContainerDisposition" name="parameters"/>
+
+    </wsdl:message>
+
+    <wsdl:portType name="VRDService">
+
+        <wsdl:operation name="login">
+
+            <wsdl:input message="impl:loginRequest" name="loginRequest"/>
+
+            <wsdl:output message="impl:loginResponse" name="loginResponse"/>
+
+            <wsdl:fault message="impl:UnknownOptionValueException" name="UnknownOptionValueException"/>
+
+            <wsdl:fault message="impl:InvalidCredentialsException" name="InvalidCredentialsException"/>
+
+            <wsdl:fault message="impl:PasswordExpiredException" name="PasswordExpiredException"/>
+
+            <wsdl:fault message="impl:NoAvailableLicenseException" name="NoAvailableLicenseException"/>
+
+            <wsdl:fault message="impl:UnknownOptionNameException" name="UnknownOptionNameException"/>
+
+            <wsdl:fault message="impl:GeneralException" name="GeneralException"/>
+
+            <wsdl:fault message="impl:InvalidParameterException" name="InvalidParameterException"/>
+
+        </wsdl:operation>
+
+        <wsdl:operation name="logout">
+
+            <wsdl:input message="impl:logoutRequest" name="logoutRequest"/>
+
+            <wsdl:output message="impl:logoutResponse" name="logoutResponse"/>
+
+            <wsdl:fault message="impl:LicenseException" name="LicenseException"/>
+
+            <wsdl:fault message="impl:GeneralException" name="GeneralException"/>
+
+        </wsdl:operation>
+
+        <wsdl:operation name="isValid">
+
+            <wsdl:input message="impl:isValidRequest" name="isValidRequest"/>
+
+            <wsdl:output message="impl:isValidResponse" name="isValidResponse"/>
+
+            <wsdl:fault message="impl:GeneralException" name="GeneralException"/>
+
+        </wsdl:operation>
+
+        <wsdl:operation name="isUserInGroup">
+
+            <wsdl:input message="impl:isUserInGroupRequest" name="isUserInGroupRequest"/>
+
+            <wsdl:output message="impl:isUserInGroupResponse" name="isUserInGroupResponse"/>
+
+            <wsdl:fault message="impl:LicenseException" name="LicenseException"/>
+
+            <wsdl:fault message="impl:GeneralException" name="GeneralException"/>
+
+            <wsdl:fault message="impl:InvalidParameterException" name="InvalidParameterException"/>
+
+        </wsdl:operation>
+
+        <wsdl:operation name="addCaseMapped">
+
+            <wsdl:input message="impl:addCaseMappedRequest" name="addCaseMappedRequest"/>
+
+            <wsdl:output message="impl:addCaseMappedResponse" name="addCaseMappedResponse"/>
+
+            <wsdl:fault message="impl:LicenseException" name="LicenseException"/>
+
+            <wsdl:fault message="impl:PermissionException" name="PermissionException"/>
+
+            <wsdl:fault message="impl:UnknownContentTypeException" name="UnknownContentTypeException"/>
+
+            <wsdl:fault message="impl:GeneralException" name="GeneralException"/>
+
+            <wsdl:fault message="impl:InvalidParameterException" name="InvalidParameterException"/>
+
+        </wsdl:operation>
+
+        <wsdl:operation name="addRecordMapped">
+
+            <wsdl:input message="impl:addRecordMappedRequest" name="addRecordMappedRequest"/>
+
+            <wsdl:output message="impl:addRecordMappedResponse" name="addRecordMappedResponse"/>
+
+            <wsdl:fault message="impl:LicenseException" name="LicenseException"/>
+
+            <wsdl:fault message="impl:PermissionException" name="PermissionException"/>
+
+            <wsdl:fault message="impl:UnknownContentTypeException" name="UnknownContentTypeException"/>
+
+            <wsdl:fault message="impl:GeneralException" name="GeneralException"/>
+
+            <wsdl:fault message="impl:InvalidParameterException" name="InvalidParameterException"/>
+
+        </wsdl:operation>
+
+        <wsdl:operation name="addMultiSectionRecordMapped">
+
+            <wsdl:input message="impl:addMultiSectionRecordMappedRequest" name="addMultiSectionRecordMappedRequest"/>
+
+            <wsdl:output message="impl:addMultiSectionRecordMappedResponse" name="addMultiSectionRecordMappedResponse"/>
+
+            <wsdl:fault message="impl:LicenseException" name="LicenseException"/>
+
+            <wsdl:fault message="impl:PermissionException" name="PermissionException"/>
+
+            <wsdl:fault message="impl:UnknownContentTypeException" name="UnknownContentTypeException"/>
+
+            <wsdl:fault message="impl:GeneralException" name="GeneralException"/>
+
+            <wsdl:fault message="impl:InvalidParameterException" name="InvalidParameterException"/>
+
+        </wsdl:operation>
+
+        <wsdl:operation name="addRendition">
+
+            <wsdl:input message="impl:addRenditionRequest" name="addRenditionRequest"/>
+
+            <wsdl:output message="impl:addRenditionResponse" name="addRenditionResponse"/>
+
+            <wsdl:fault message="impl:LicenseException" name="LicenseException"/>
+
+            <wsdl:fault message="impl:PermissionException" name="PermissionException"/>
+
+            <wsdl:fault message="impl:UnknownContentTypeException" name="UnknownContentTypeException"/>
+
+            <wsdl:fault message="impl:UnknownRecordIDException" name="UnknownRecordIDException"/>
+
+            <wsdl:fault message="impl:UnknownSectionException" name="UnknownSectionException"/>
+
+            <wsdl:fault message="impl:GeneralException" name="GeneralException"/>
+
+            <wsdl:fault message="impl:InvalidParameterException" name="InvalidParameterException"/>
+
+        </wsdl:operation>
+
+        <wsdl:operation name="addVersion">
+
+            <wsdl:input message="impl:addVersionRequest" name="addVersionRequest"/>
+
+            <wsdl:output message="impl:addVersionResponse" name="addVersionResponse"/>
+
+            <wsdl:fault message="impl:LicenseException" name="LicenseException"/>
+
+            <wsdl:fault message="impl:PermissionException" name="PermissionException"/>
+
+            <wsdl:fault message="impl:UnknownContentTypeException" name="UnknownContentTypeException"/>
+
+            <wsdl:fault message="impl:UnknownRecordIDException" name="UnknownRecordIDException"/>
+
+            <wsdl:fault message="impl:UnknownSectionException" name="UnknownSectionException"/>
+
+            <wsdl:fault message="impl:GeneralException" name="GeneralException"/>
+
+            <wsdl:fault message="impl:InvalidParameterException" name="InvalidParameterException"/>
+
+        </wsdl:operation>
+
+        <wsdl:operation name="getRendition">
+
+            <wsdl:input message="impl:getRenditionRequest" name="getRenditionRequest"/>
+
+            <wsdl:output message="impl:getRenditionResponse" name="getRenditionResponse"/>
+
+            <wsdl:fault message="impl:LicenseException" name="LicenseException"/>
+
+            <wsdl:fault message="impl:PermissionException" name="PermissionException"/>
+
+            <wsdl:fault message="impl:UnknownRecordIDException" name="UnknownRecordIDException"/>
+
+            <wsdl:fault message="impl:UnknownSectionException" name="UnknownSectionException"/>
+
+            <wsdl:fault message="impl:GeneralException" name="GeneralException"/>
+
+            <wsdl:fault message="impl:UnknownSubSectionException" name="UnknownSubSectionException"/>
+
+            <wsdl:fault message="impl:InvalidParameterException" name="InvalidParameterException"/>
+
+        </wsdl:operation>
+
+        <wsdl:operation name="getUITemplate">
+
+            <wsdl:input message="impl:getUITemplateRequest" name="getUITemplateRequest"/>
+
+            <wsdl:output message="impl:getUITemplateResponse" name="getUITemplateResponse"/>
+
+            <wsdl:fault message="impl:LicenseException" name="LicenseException"/>
+
+            <wsdl:fault message="impl:PermissionException" name="PermissionException"/>
+
+            <wsdl:fault message="impl:UnknownTemplateException" name="UnknownTemplateException"/>
+
+            <wsdl:fault message="impl:GeneralException" name="GeneralException"/>
+
+            <wsdl:fault message="impl:InvalidParameterException" name="InvalidParameterException"/>
+
+        </wsdl:operation>
+
+        <wsdl:operation name="execute">
+
+            <wsdl:input message="impl:executeRequest" name="executeRequest"/>
+
+            <wsdl:output message="impl:executeResponse" name="executeResponse"/>
+
+            <wsdl:fault message="impl:LicenseException" name="LicenseException"/>
+
+            <wsdl:fault message="impl:PermissionException" name="PermissionException"/>
+
+            <wsdl:fault message="impl:UnknownTemplateException" name="UnknownTemplateException"/>
+
+            <wsdl:fault message="impl:GeneralException" name="GeneralException"/>
+
+            <wsdl:fault message="impl:InvalidParameterException" name="InvalidParameterException"/>
+
+        </wsdl:operation>
+
+        <wsdl:operation name="triggerRecordContainerDisposition">
+
+            <wsdl:input message="impl:triggerRecordContainerDispositionRequest"
+                        name="triggerRecordContainerDispositionRequest"/>
+
+            <wsdl:output message="impl:triggerRecordContainerDispositionResponse"
+                         name="triggerRecordContainerDispositionResponse"/>
+
+            <wsdl:fault message="impl:LicenseException" name="LicenseException"/>
+
+            <wsdl:fault message="impl:PermissionException" name="PermissionException"/>
+
+            <wsdl:fault message="impl:UnknownRecordIDException" name="UnknownRecordIDException"/>
+
+            <wsdl:fault message="impl:GeneralException" name="GeneralException"/>
+
+            <wsdl:fault message="impl:InvalidParameterException" name="InvalidParameterException"/>
+
+        </wsdl:operation>
+
+        <wsdl:operation name="triggerContainerDisposition">
+
+            <wsdl:input message="impl:triggerContainerDispositionRequest" name="triggerContainerDispositionRequest"/>
+
+            <wsdl:output message="impl:triggerContainerDispositionResponse" name="triggerContainerDispositionResponse"/>
+
+            <wsdl:fault message="impl:LicenseException" name="LicenseException"/>
+
+            <wsdl:fault message="impl:PermissionException" name="PermissionException"/>
+
+            <wsdl:fault message="impl:GeneralException" name="GeneralException"/>
+
+            <wsdl:fault message="impl:UnknownContainerIDException" name="UnknownContainerIDException"/>
+
+            <wsdl:fault message="impl:InvalidParameterException" name="InvalidParameterException"/>
+
+        </wsdl:operation>
+
+        <wsdl:operation name="triggerRecordDisposition">
+
+            <wsdl:input message="impl:triggerRecordDispositionRequest" name="triggerRecordDispositionRequest"/>
+
+            <wsdl:output message="impl:triggerRecordDispositionResponse" name="triggerRecordDispositionResponse"/>
+
+            <wsdl:fault message="impl:LicenseException" name="LicenseException"/>
+
+            <wsdl:fault message="impl:PermissionException" name="PermissionException"/>
+
+            <wsdl:fault message="impl:UnknownRecordIDException" name="UnknownRecordIDException"/>
+
+            <wsdl:fault message="impl:GeneralException" name="GeneralException"/>
+
+            <wsdl:fault message="impl:InvalidParameterException" name="InvalidParameterException"/>
+
+        </wsdl:operation>
+
+    </wsdl:portType>
+
+    <wsdl:binding name="VRDServicePortSoapBinding" type="impl:VRDService">
+
+        <wsdlsoap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+
+        <wsdl:operation name="login">
+
+            <wsdlsoap:operation soapAction="http://record.webservices.rd.vignette.com/login"/>
+
+            <wsdl:input name="loginRequest">
+
+                <wsdlsoap:body use="literal"/>
+
+            </wsdl:input>
+
+            <wsdl:output name="loginResponse">
+
+                <wsdlsoap:body use="literal"/>
+
+            </wsdl:output>
+
+            <wsdl:fault name="UnknownOptionValueException">
+
+                <wsdlsoap:fault name="UnknownOptionValueException" use="literal"/>
+
+            </wsdl:fault>
+
+            <wsdl:fault name="InvalidCredentialsException">
+
+                <wsdlsoap:fault name="InvalidCredentialsException" use="literal"/>
+
+            </wsdl:fault>
+
+            <wsdl:fault name="PasswordExpiredException">
+
+                <wsdlsoap:fault name="PasswordExpiredException" use="literal"/>
+
+            </wsdl:fault>
+
+            <wsdl:fault name="NoAvailableLicenseException">
+
+                <wsdlsoap:fault name="NoAvailableLicenseException" use="literal"/>
+
+            </wsdl:fault>
+
+            <wsdl:fault name="UnknownOptionNameException">
+
+                <wsdlsoap:fault name="UnknownOptionNameException" use="literal"/>
+
+            </wsdl:fault>
+
+            <wsdl:fault name="GeneralException">
+
+                <wsdlsoap:fault name="GeneralException" use="literal"/>
+
+            </wsdl:fault>
+
+            <wsdl:fault name="InvalidParameterException">
+
+                <wsdlsoap:fault name="InvalidParameterException" use="literal"/>
+
+            </wsdl:fault>
+
+        </wsdl:operation>
+
+        <wsdl:operation name="logout">
+
+            <wsdlsoap:operation soapAction="http://record.webservices.rd.vignette.com/logout"/>
+
+            <wsdl:input name="logoutRequest">
+
+                <wsdlsoap:body use="literal"/>
+
+            </wsdl:input>
+
+            <wsdl:output name="logoutResponse">
+
+                <wsdlsoap:body use="literal"/>
+
+            </wsdl:output>
+
+            <wsdl:fault name="LicenseException">
+
+                <wsdlsoap:fault name="LicenseException" use="literal"/>
+
+            </wsdl:fault>
+
+            <wsdl:fault name="GeneralException">
+
+                <wsdlsoap:fault name="GeneralException" use="literal"/>
+
+            </wsdl:fault>
+
+        </wsdl:operation>
+
+        <wsdl:operation name="isValid">
+
+            <wsdlsoap:operation soapAction="http://record.webservices.rd.vignette.com/isValid"/>
+
+            <wsdl:input name="isValidRequest">
+
+                <wsdlsoap:body use="literal"/>
+
+            </wsdl:input>
+
+            <wsdl:output name="isValidResponse">
+
+                <wsdlsoap:body use="literal"/>
+
+            </wsdl:output>
+
+            <wsdl:fault name="GeneralException">
+
+                <wsdlsoap:fault name="GeneralException" use="literal"/>
+
+            </wsdl:fault>
+
+        </wsdl:operation>
+
+        <wsdl:operation name="isUserInGroup">
+
+            <wsdlsoap:operation soapAction="http://record.webservices.rd.vignette.com/isUserInGroup"/>
+
+            <wsdl:input name="isUserInGroupRequest">
+
+                <wsdlsoap:body use="literal"/>
+
+            </wsdl:input>
+
+            <wsdl:output name="isUserInGroupResponse">
+
+                <wsdlsoap:body use="literal"/>
+
+            </wsdl:output>
+
+            <wsdl:fault name="LicenseException">
+
+                <wsdlsoap:fault name="LicenseException" use="literal"/>
+
+            </wsdl:fault>
+
+            <wsdl:fault name="GeneralException">
+
+                <wsdlsoap:fault name="GeneralException" use="literal"/>
+
+            </wsdl:fault>
+
+            <wsdl:fault name="InvalidParameterException">
+
+                <wsdlsoap:fault name="InvalidParameterException" use="literal"/>
+
+            </wsdl:fault>
+
+        </wsdl:operation>
+
+        <wsdl:operation name="addCaseMapped">
+
+            <wsdlsoap:operation soapAction="http://record.webservices.rd.vignette.com/addCaseMapped"/>
+
+            <wsdl:input name="addCaseMappedRequest">
+
+                <wsdlsoap:body use="literal"/>
+
+            </wsdl:input>
+
+            <wsdl:output name="addCaseMappedResponse">
+
+                <wsdlsoap:body use="literal"/>
+
+            </wsdl:output>
+
+            <wsdl:fault name="LicenseException">
+
+                <wsdlsoap:fault name="LicenseException" use="literal"/>
+
+            </wsdl:fault>
+
+            <wsdl:fault name="PermissionException">
+
+                <wsdlsoap:fault name="PermissionException" use="literal"/>
+
+            </wsdl:fault>
+
+            <wsdl:fault name="UnknownContentTypeException">
+
+                <wsdlsoap:fault name="UnknownContentTypeException" use="literal"/>
+
+            </wsdl:fault>
+
+            <wsdl:fault name="GeneralException">
+
+                <wsdlsoap:fault name="GeneralException" use="literal"/>
+
+            </wsdl:fault>
+
+            <wsdl:fault name="InvalidParameterException">
+
+                <wsdlsoap:fault name="InvalidParameterException" use="literal"/>
+
+            </wsdl:fault>
+
+        </wsdl:operation>
+
+        <wsdl:operation name="addRecordMapped">
+
+            <wsdlsoap:operation soapAction="http://record.webservices.rd.vignette.com/addRecordMapped"/>
+
+            <wsdl:input name="addRecordMappedRequest">
+
+                <wsdlsoap:body use="literal"/>
+
+            </wsdl:input>
+
+            <wsdl:output name="addRecordMappedResponse">
+
+                <wsdlsoap:body use="literal"/>
+
+            </wsdl:output>
+
+            <wsdl:fault name="LicenseException">
+
+                <wsdlsoap:fault name="LicenseException" use="literal"/>
+
+            </wsdl:fault>
+
+            <wsdl:fault name="PermissionException">
+
+                <wsdlsoap:fault name="PermissionException" use="literal"/>
+
+            </wsdl:fault>
+
+            <wsdl:fault name="UnknownContentTypeException">
+
+                <wsdlsoap:fault name="UnknownContentTypeException" use="literal"/>
+
+            </wsdl:fault>
+
+            <wsdl:fault name="GeneralException">
+
+                <wsdlsoap:fault name="GeneralException" use="literal"/>
+
+            </wsdl:fault>
+
+            <wsdl:fault name="InvalidParameterException">
+
+                <wsdlsoap:fault name="InvalidParameterException" use="literal"/>
+
+            </wsdl:fault>
+
+        </wsdl:operation>
+
+        <wsdl:operation name="addMultiSectionRecordMapped">
+
+            <wsdlsoap:operation soapAction="http://record.webservices.rd.vignette.com/addMultiSectionRecordMapped"/>
+
+            <wsdl:input name="addMultiSectionRecordMappedRequest">
+
+                <wsdlsoap:body use="literal"/>
+
+            </wsdl:input>
+
+            <wsdl:output name="addMultiSectionRecordMappedResponse">
+
+                <wsdlsoap:body use="literal"/>
+
+            </wsdl:output>
+
+            <wsdl:fault name="LicenseException">
+
+                <wsdlsoap:fault name="LicenseException" use="literal"/>
+
+            </wsdl:fault>
+
+            <wsdl:fault name="PermissionException">
+
+                <wsdlsoap:fault name="PermissionException" use="literal"/>
+
+            </wsdl:fault>
+
+            <wsdl:fault name="UnknownContentTypeException">
+
+                <wsdlsoap:fault name="UnknownContentTypeException" use="literal"/>
+
+            </wsdl:fault>
+
+            <wsdl:fault name="GeneralException">
+
+                <wsdlsoap:fault name="GeneralException" use="literal"/>
+
+            </wsdl:fault>
+
+            <wsdl:fault name="InvalidParameterException">
+
+                <wsdlsoap:fault name="InvalidParameterException" use="literal"/>
+
+            </wsdl:fault>
+
+        </wsdl:operation>
+
+        <wsdl:operation name="addRendition">
+
+            <wsdlsoap:operation soapAction="http://record.webservices.rd.vignette.com/addRendition"/>
+
+            <wsdl:input name="addRenditionRequest">
+
+                <wsdlsoap:body use="literal"/>
+
+            </wsdl:input>
+
+            <wsdl:output name="addRenditionResponse">
+
+                <wsdlsoap:body use="literal"/>
+
+            </wsdl:output>
+
+            <wsdl:fault name="LicenseException">
+
+                <wsdlsoap:fault name="LicenseException" use="literal"/>
+
+            </wsdl:fault>
+
+            <wsdl:fault name="PermissionException">
+
+                <wsdlsoap:fault name="PermissionException" use="literal"/>
+
+            </wsdl:fault>
+
+            <wsdl:fault name="UnknownContentTypeException">
+
+                <wsdlsoap:fault name="UnknownContentTypeException" use="literal"/>
+
+            </wsdl:fault>
+
+            <wsdl:fault name="UnknownRecordIDException">
+
+                <wsdlsoap:fault name="UnknownRecordIDException" use="literal"/>
+
+            </wsdl:fault>
+
+            <wsdl:fault name="UnknownSectionException">
+
+                <wsdlsoap:fault name="UnknownSectionException" use="literal"/>
+
+            </wsdl:fault>
+
+            <wsdl:fault name="GeneralException">
+
+                <wsdlsoap:fault name="GeneralException" use="literal"/>
+
+            </wsdl:fault>
+
+            <wsdl:fault name="InvalidParameterException">
+
+                <wsdlsoap:fault name="InvalidParameterException" use="literal"/>
+
+            </wsdl:fault>
+
+        </wsdl:operation>
+
+        <wsdl:operation name="addVersion">
+
+            <wsdlsoap:operation soapAction="http://record.webservices.rd.vignette.com/addVersion"/>
+
+            <wsdl:input name="addVersionRequest">
+
+                <wsdlsoap:body use="literal"/>
+
+            </wsdl:input>
+
+            <wsdl:output name="addVersionResponse">
+
+                <wsdlsoap:body use="literal"/>
+
+            </wsdl:output>
+
+            <wsdl:fault name="LicenseException">
+
+                <wsdlsoap:fault name="LicenseException" use="literal"/>
+
+            </wsdl:fault>
+
+            <wsdl:fault name="PermissionException">
+
+                <wsdlsoap:fault name="PermissionException" use="literal"/>
+
+            </wsdl:fault>
+
+            <wsdl:fault name="UnknownContentTypeException">
+
+                <wsdlsoap:fault name="UnknownContentTypeException" use="literal"/>
+
+            </wsdl:fault>
+
+            <wsdl:fault name="UnknownRecordIDException">
+
+                <wsdlsoap:fault name="UnknownRecordIDException" use="literal"/>
+
+            </wsdl:fault>
+
+            <wsdl:fault name="UnknownSectionException">
+
+                <wsdlsoap:fault name="UnknownSectionException" use="literal"/>
+
+            </wsdl:fault>
+
+            <wsdl:fault name="GeneralException">
+
+                <wsdlsoap:fault name="GeneralException" use="literal"/>
+
+            </wsdl:fault>
+
+            <wsdl:fault name="InvalidParameterException">
+
+                <wsdlsoap:fault name="InvalidParameterException" use="literal"/>
+
+            </wsdl:fault>
+
+        </wsdl:operation>
+
+        <wsdl:operation name="getRendition">
+
+            <wsdlsoap:operation soapAction="http://record.webservices.rd.vignette.com/getRendition"/>
+
+            <wsdl:input name="getRenditionRequest">
+
+                <wsdlsoap:body use="literal"/>
+
+            </wsdl:input>
+
+            <wsdl:output name="getRenditionResponse">
+
+                <wsdlsoap:body use="literal"/>
+
+            </wsdl:output>
+
+            <wsdl:fault name="LicenseException">
+
+                <wsdlsoap:fault name="LicenseException" use="literal"/>
+
+            </wsdl:fault>
+
+            <wsdl:fault name="PermissionException">
+
+                <wsdlsoap:fault name="PermissionException" use="literal"/>
+
+            </wsdl:fault>
+
+            <wsdl:fault name="UnknownRecordIDException">
+
+                <wsdlsoap:fault name="UnknownRecordIDException" use="literal"/>
+
+            </wsdl:fault>
+
+            <wsdl:fault name="UnknownSectionException">
+
+                <wsdlsoap:fault name="UnknownSectionException" use="literal"/>
+
+            </wsdl:fault>
+
+            <wsdl:fault name="GeneralException">
+
+                <wsdlsoap:fault name="GeneralException" use="literal"/>
+
+            </wsdl:fault>
+
+            <wsdl:fault name="UnknownSubSectionException">
+
+                <wsdlsoap:fault name="UnknownSubSectionException" use="literal"/>
+
+            </wsdl:fault>
+
+            <wsdl:fault name="InvalidParameterException">
+
+                <wsdlsoap:fault name="InvalidParameterException" use="literal"/>
+
+            </wsdl:fault>
+
+        </wsdl:operation>
+
+        <wsdl:operation name="getUITemplate">
+
+            <wsdlsoap:operation soapAction="http://record.webservices.rd.vignette.com/getUITemplate"/>
+
+            <wsdl:input name="getUITemplateRequest">
+
+                <wsdlsoap:body use="literal"/>
+
+            </wsdl:input>
+
+            <wsdl:output name="getUITemplateResponse">
+
+                <wsdlsoap:body use="literal"/>
+
+            </wsdl:output>
+
+            <wsdl:fault name="LicenseException">
+
+                <wsdlsoap:fault name="LicenseException" use="literal"/>
+
+            </wsdl:fault>
+
+            <wsdl:fault name="PermissionException">
+
+                <wsdlsoap:fault name="PermissionException" use="literal"/>
+
+            </wsdl:fault>
+
+            <wsdl:fault name="UnknownTemplateException">
+
+                <wsdlsoap:fault name="UnknownTemplateException" use="literal"/>
+
+            </wsdl:fault>
+
+            <wsdl:fault name="GeneralException">
+
+                <wsdlsoap:fault name="GeneralException" use="literal"/>
+
+            </wsdl:fault>
+
+            <wsdl:fault name="InvalidParameterException">
+
+                <wsdlsoap:fault name="InvalidParameterException" use="literal"/>
+
+            </wsdl:fault>
+
+        </wsdl:operation>
+
+        <wsdl:operation name="execute">
+
+            <wsdlsoap:operation soapAction="http://record.webservices.rd.vignette.com/execute"/>
+
+            <wsdl:input name="executeRequest">
+
+                <wsdlsoap:body use="literal"/>
+
+            </wsdl:input>
+
+            <wsdl:output name="executeResponse">
+
+                <wsdlsoap:body use="literal"/>
+
+            </wsdl:output>
+
+            <wsdl:fault name="LicenseException">
+
+                <wsdlsoap:fault name="LicenseException" use="literal"/>
+
+            </wsdl:fault>
+
+            <wsdl:fault name="PermissionException">
+
+                <wsdlsoap:fault name="PermissionException" use="literal"/>
+
+            </wsdl:fault>
+
+            <wsdl:fault name="UnknownTemplateException">
+
+                <wsdlsoap:fault name="UnknownTemplateException" use="literal"/>
+
+            </wsdl:fault>
+
+            <wsdl:fault name="GeneralException">
+
+                <wsdlsoap:fault name="GeneralException" use="literal"/>
+
+            </wsdl:fault>
+
+            <wsdl:fault name="InvalidParameterException">
+
+                <wsdlsoap:fault name="InvalidParameterException" use="literal"/>
+
+            </wsdl:fault>
+
+        </wsdl:operation>
+
+        <wsdl:operation name="triggerRecordContainerDisposition">
+
+            <wsdlsoap:operation
+                    soapAction="http://record.webservices.rd.vignette.com/triggerRecordContainerDisposition"/>
+
+            <wsdl:input name="triggerRecordContainerDispositionRequest">
+
+                <wsdlsoap:body use="literal"/>
+
+            </wsdl:input>
+
+            <wsdl:output name="triggerRecordContainerDispositionResponse">
+
+                <wsdlsoap:body use="literal"/>
+
+            </wsdl:output>
+
+            <wsdl:fault name="LicenseException">
+
+                <wsdlsoap:fault name="LicenseException" use="literal"/>
+
+            </wsdl:fault>
+
+            <wsdl:fault name="PermissionException">
+
+                <wsdlsoap:fault name="PermissionException" use="literal"/>
+
+            </wsdl:fault>
+
+            <wsdl:fault name="UnknownRecordIDException">
+
+                <wsdlsoap:fault name="UnknownRecordIDException" use="literal"/>
+
+            </wsdl:fault>
+
+            <wsdl:fault name="GeneralException">
+
+                <wsdlsoap:fault name="GeneralException" use="literal"/>
+
+            </wsdl:fault>
+
+            <wsdl:fault name="InvalidParameterException">
+
+                <wsdlsoap:fault name="InvalidParameterException" use="literal"/>
+
+            </wsdl:fault>
+
+        </wsdl:operation>
+
+        <wsdl:operation name="triggerContainerDisposition">
+
+            <wsdlsoap:operation soapAction="http://record.webservices.rd.vignette.com/triggerContainerDisposition"/>
+
+            <wsdl:input name="triggerContainerDispositionRequest">
+
+                <wsdlsoap:body use="literal"/>
+
+            </wsdl:input>
+
+            <wsdl:output name="triggerContainerDispositionResponse">
+
+                <wsdlsoap:body use="literal"/>
+
+            </wsdl:output>
+
+            <wsdl:fault name="LicenseException">
+
+                <wsdlsoap:fault name="LicenseException" use="literal"/>
+
+            </wsdl:fault>
+
+            <wsdl:fault name="PermissionException">
+
+                <wsdlsoap:fault name="PermissionException" use="literal"/>
+
+            </wsdl:fault>
+
+            <wsdl:fault name="GeneralException">
+
+                <wsdlsoap:fault name="GeneralException" use="literal"/>
+
+            </wsdl:fault>
+
+            <wsdl:fault name="UnknownContainerIDException">
+
+                <wsdlsoap:fault name="UnknownContainerIDException" use="literal"/>
+
+            </wsdl:fault>
+
+            <wsdl:fault name="InvalidParameterException">
+
+                <wsdlsoap:fault name="InvalidParameterException" use="literal"/>
+
+            </wsdl:fault>
+
+        </wsdl:operation>
+
+        <wsdl:operation name="triggerRecordDisposition">
+
+            <wsdlsoap:operation soapAction="http://record.webservices.rd.vignette.com/triggerRecordDisposition"/>
+
+            <wsdl:input name="triggerRecordDispositionRequest">
+
+                <wsdlsoap:body use="literal"/>
+
+            </wsdl:input>
+
+            <wsdl:output name="triggerRecordDispositionResponse">
+
+                <wsdlsoap:body use="literal"/>
+
+            </wsdl:output>
+
+            <wsdl:fault name="LicenseException">
+
+                <wsdlsoap:fault name="LicenseException" use="literal"/>
+
+            </wsdl:fault>
+
+            <wsdl:fault name="PermissionException">
+
+                <wsdlsoap:fault name="PermissionException" use="literal"/>
+
+            </wsdl:fault>
+
+            <wsdl:fault name="UnknownRecordIDException">
+
+                <wsdlsoap:fault name="UnknownRecordIDException" use="literal"/>
+
+            </wsdl:fault>
+
+            <wsdl:fault name="GeneralException">
+
+                <wsdlsoap:fault name="GeneralException" use="literal"/>
+
+            </wsdl:fault>
+
+            <wsdl:fault name="InvalidParameterException">
+
+                <wsdlsoap:fault name="InvalidParameterException" use="literal"/>
+
+            </wsdl:fault>
+
+        </wsdl:operation>
+
+    </wsdl:binding>
+
+    <wsdl:service name="RecordService">
+
+        <wsdl:port binding="impl:VRDServicePortSoapBinding" name="VRDServicePort">
+
+            <wsdlsoap:address location="http://uadwa22:13080/rd/services/RecordService"/>
+
+        </wsdl:port>
+
+    </wsdl:service>
+
+</wsdl:definitions>

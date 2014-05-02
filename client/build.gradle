@@ -1,0 +1,21 @@
+dependencies{
+    compile "org.codehaus.groovy:groovy-all:${groovyVersion}"
+    compile "ch.qos.logback:logback-classic:${logbackVersion}"
+    compile "org.slf4j:slf4j-api:1.6.2"
+    compile "org.apache.httpcomponents:httpmime:${httpmimeVersion}"
+    compile "org.apache.httpcomponents:httpclient:${httpclientVersion}"
+    compile "commons-lang:commons-lang:${commonsLangVersion}"
+    compile "commons-io:commons-io:${commonsIOVersion}"
+    compile "joda-time:joda-time:2.0"
+    compile "com.google.guava:guava:15.0"
+	compile project(":schema")
+	
+
+    compile "org.jvnet.jaxb2_commons:jaxb2-basics:${jaxbBasicVersion}"
+    compile "org.jvnet.jaxb2_commons:jaxb2-basics-runtime:${jaxbBasicVersion}"
+    compile "org.jvnet.jaxb2_commons:jaxb2-basics-tools:${jaxbBasicVersion}"
+	
+    testCompile "org.spockframework:spock-core:0.7-groovy-2.0"
+    testCompile "org.mockito:mockito-core:1.9.5"
+    testCompile "org.springframework:spring-test:3.2.8.RELEASE"
+}

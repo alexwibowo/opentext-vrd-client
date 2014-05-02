@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            targetNamespace="http://www.vignette.com/2014/04/14/tower.xsd"
+            xmlns="http://www.vignette.com/2014/04/14/tower.xsd"
+            elementFormDefault="qualified">
+
+    <xsd:element name="tower-document">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element name="title">
+                    <xsd:complexType>
+                        <xsd:sequence>
+                            <xsd:element name="attribute" type="attributeType" maxOccurs="unbounded"/>
+                        </xsd:sequence>
+                    </xsd:complexType>
+                </xsd:element>
+                <xsd:element name="section-data" minOccurs="0">
+                    <xsd:complexType>
+                        <xsd:attribute name="type"/>
+                        <xsd:attribute name="encoding"/>
+                        <xsd:attribute name="location"/>
+                        <xsd:attribute name="delete" type="xsd:boolean"/>
+                    </xsd:complexType>
+                </xsd:element>
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+
+    <xsd:complexType name="attributeType">
+        <xsd:sequence>
+            <xsd:element name="name" type="xsd:string"/>
+            <xsd:element name="MultiValue" type="xsd:boolean"/>
+            <xsd:element name="value" type="xsd:string"/>
+        </xsd:sequence>
+    </xsd:complexType>
+</xsd:schema>

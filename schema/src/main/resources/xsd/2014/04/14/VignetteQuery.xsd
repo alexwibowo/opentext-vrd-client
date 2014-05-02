@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            targetNamespace="http://www.vignette.com/2014/04/14/VignetteQuery.xsd"
+            xmlns="http://www.vignette.com/2014/04/14/VignetteQuery.xsd"
+            elementFormDefault="qualified">
+
+    <xsd:element name="DataSource">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element name="Query" type="QueryType" minOccurs="0" maxOccurs="unbounded"/>
+                <xsd:element name="QueryResult" type="QueryResultType" minOccurs="0"  maxOccurs="unbounded"/>
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+
+
+    <xsd:complexType name="QueryType">
+        <xsd:annotation>
+            <xsd:documentation>Represent single request. In effect, this will be processed as though it were a single SQL statement.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+            <!-- A value uniquely identifying the query. The same ID will be used in the corresponding reply -->
+            <xsd:element name="ID" type="xsd:long"/>
+
+            <!-- Fully qualified class name of the handler to be used to handle the request. Normally not used-->
+            <xsd:element name="Handler" type="xsd:string" minOccurs="0"/>
+
+            <xsd:element name="Action" type="ActionType"/>
+
+            <!-- The system resource on which the operation is to be performed
+             Possible values are:
+             #COLLECTION_LIST#
+             #DOCUMENT#
+             #DUAL#
+             #HISTORY#
+             #RENDITION#
+             #SYSTEM#
+             #TEMPLATE#
+             #THESAURUS#
+             #USER#
+             <collection name>
+             <file plan name>
+            -->
+            <xsd:element name="Source" type="xsd:string"/>
+
+            <!--  The number of rows to be discarded from the results list -->
+            <xsd:element name="Offset" minOccurs="0" type="xsd:long"/>
+
+
+            <!-- The maximum number of rows to be included in the result list. Any rows discarded in accordance
+  with the Offset element are not counted for this purpose -->
+            <xsd:element name="MaxRows" minOccurs="0" type="xsd:long"/>
+
+            <xsd:element name="Attrs" minOccurs="0">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <!-- Name of a record attribute to be returned -->
+                        <xsd:element name="RecordAttr" type="xsd:string" minOccurs="0" maxOccurs="unbounded"/>
+                        <xsd:element name="Attr" type="xsd:string" minOccurs="0" maxOccurs="unbounded"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+
+            <xsd:element name="Sets" minOccurs="0">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="Set" type="SetType" minOccurs="1" maxOccurs="unbounded"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+
+            <xsd:element name="Conditions" minOccurs="0">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="Condition" type="ConditionType" minOccurs="1" maxOccurs="unbounded"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+
+            <xsd:element name="OrderBy" minOccurs="0">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="OrderAttr" type="OrderAttrType" minOccurs="1" maxOccurs="unbounded"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+
+            <xsd:element name="GroupBy" minOccurs="0">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="GroupByAttr" type="GroupByAttrType" minOccurs="1" maxOccurs="unbounded"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+
+
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="SetType">
+        <xsd:sequence>
+            <!-- Identify the attribute whose value is to be set -->
+            <xsd:element name="RecordAttr" type="xsd:string"/>
+
+            <!-- Identify the attribute whose value is to be set -->
+            <xsd:element name="Attr" type="xsd:string"/>
+
+            <!-- Specify the value to be assigned to the attribute named in the Attr element -->
+            <xsd:element name="Value" type="xsd:string"/>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="OrderAttrType">
+        <xsd:sequence>
+            <!-- Name of an attribute or record attribute to be used as a sequence field in the result list -->
+            <xsd:element name="Value" type="xsd:string"/>
+        </xsd:sequence>
+    </xsd:complexType>
+
+  <xsd:complexType name="GroupByAttrType">
+        <xsd:sequence>
+            <!-- Name of an attribute or record attribute to be used as a sequence field in the result list -->
+            <xsd:element name="Value" type="xsd:string"/>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="ConditionType">
+        <xsd:annotation>
+            <xsd:documentation>Defines search condition</xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+            <!-- number of left parentheses to precede the Attr sequence in the where clause -->
+            <xsd:element name="OpenPrnth" type="xsd:integer" minOccurs="0"/>
+            <xsd:element name="Attr" type="xsd:string"/>
+            <xsd:element name="RecordAttr" type="xsd:string"/>
+            <xsd:element name="Oper" type="OperType"/>
+            <xsd:element name="Value" type="xsd:string"/>
+            <xsd:element name="Join" type="JoinType" minOccurs="0"/>
+            <xsd:element name="ClosePrnth" type="xsd:integer" minOccurs="0"/>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:simpleType name="ActionType">
+        <xsd:annotation>
+            <xsd:documentation>Enumeration of operation to be performed</xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="INSERT"/>
+            <xsd:enumeration value="SELECT"/>
+            <xsd:enumeration value="UPDATE"/>
+            <xsd:enumeration value="DELETE"/>
+            <xsd:enumeration value="CHECKIN"/>
+            <xsd:enumeration value="CHECKOUT"/>
+            <xsd:enumeration value="UNDO_CHECKOUT"/>
+            <xsd:enumeration value="RELEASE"/>
+            <xsd:enumeration value="VALIDATE"/>
+            <xsd:enumeration value="RELOAD"/>
+            <xsd:enumeration value="PURGE"/>
+            <xsd:enumeration value="PROMOTE"/>
+            <xsd:enumeration value="DELETEVERSION"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+
+    <xsd:simpleType name="JoinType">
+        <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="AND"/>
+            <xsd:enumeration value="OR"/>
+            <xsd:enumeration value="AND NOT"/>
+            <xsd:enumeration value="OR NOT"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+
+    <xsd:simpleType name="OperType">
+        <xsd:restriction base="xsd:string">
+            <xsd:enumeration value=">"/>
+            <xsd:enumeration value="&lt;"/>
+            <xsd:enumeration value=">="/>
+            <xsd:enumeration value="&lt;="/>
+            <xsd:enumeration value="="/>
+            <xsd:enumeration value="!="/>
+            <xsd:enumeration value="LIKE"/>
+            <xsd:enumeration value="IN"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+
+    <xsd:complexType name="QueryResultType">
+        <xsd:sequence>
+            <xsd:element name="ID" type="xsd:long"/>
+            <xsd:element name="DataItem" type="DataItemType" minOccurs="0" maxOccurs="unbounded"/>
+            <xsd:element name="MaxRow" type="xsd:integer" minOccurs="0" />
+            <xsd:element name="TotalCount" type="xsd:integer"/>
+            <xsd:element name="Warning" type="xsd:string" minOccurs="0"/>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="DataItemType">
+        <xsd:sequence>
+            <xsd:element name="Value" minOccurs="0" maxOccurs="unbounded" type="ResultValueType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="ResultValueType">
+        <xsd:sequence>
+            <xsd:element name="ID" type="xsd:string"/>
+            <xsd:element name="Text" type="NullableText"/>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="NullableText">
+        <xsd:simpleContent>
+            <xsd:extension base="xsd:string">
+                <xsd:attribute name="isNull" type="xsd:boolean" use="optional" />
+            </xsd:extension>
+        </xsd:simpleContent>
+    </xsd:complexType>
+
+
+
+
+</xsd:schema>
+

@@ -1,0 +1,97 @@
+configurations {
+    jaxb
+}
+
+ext.axiomVersion = "1.2.14"
+ext.jaxbVersion = "2.2.7"
+ext.jaxbBasicVersion = "0.6.5"
+
+ext.schemaDir = "${projectDir}/src/main/resources/xsd"
+ext.schemas   = ['**/*.xsd']
+ext.bindings  = ['**/*.jxb']
+ext.generatedXSDSourcesDir = "${buildDir}/generated-sources/xsd"
+ext.wsdlDir = "${projectDir}/src/main/resources/wsdl"
+ext.wsdls     = ['**/*.wsdl']
+ext.generatedWSDLSourcesDir = "${buildDir}/generated-sources/wsdl"
+
+apply plugin: 'groovy'
+
+repositories {
+    mavenCentral()
+}
+
+sourceSets {
+    /**
+     * Specifies that our Java classes depend on the output of 'generated' sourceset
+     */
+    main {
+        java {
+            srcDirs = ["src/main/java", "${generatedXSDSourcesDir}","${generatedWSDLSourcesDir}"]
+        }
+    }
+}
+
+dependencies{
+    compile "org.codehaus.groovy:groovy-all:2.2.2"
+    compile "ch.qos.logback:logback-classic:1.1.1"
+    compile "org.slf4j:slf4j-api:1.6.2"
+    compile "org.apache.ws.commons.axiom:axiom-api:${axiomVersion}"
+    compile "org.apache.ws.commons.axiom:axiom-impl:${axiomVersion}"
+    compile "org.apache.ws.commons.axiom:axiom-jaxb:${axiomVersion}"
+    compile "org.apache.httpcomponents:httpmime:4.3.1"
+    compile("org.apache.httpcomponents:httpclient:4.1.2")
+    compile("commons-lang:commons-lang:2.6")
+    compile("commons-io:commons-io:2.0.1")
+    compile("joda-time:joda-time:2.0")
+    compile("com.google.guava:guava:15.0")
+    testCompile("org.spockframework:spock-core:0.7-groovy-2.0")
+    testCompile("org.mockito:mockito-core:1.9.5")
+    testCompile("org.springframework:spring-test:3.2.8.RELEASE")
+
+    /**
+     * Libraries required for 'jaxb' configuration
+     */
+    jaxb "com.sun.xml.bind:jaxb-impl:${jaxbVersion}"
+    jaxb "com.sun.xml.bind:jaxb-xjc:${jaxbVersion}"
+    jaxb "org.jvnet.jaxb2_commons:jaxb2-basics:${jaxbBasicVersion}"
+    jaxb "org.jvnet.jaxb2_commons:jaxb2-basics-runtime:${jaxbBasicVersion}"
+    jaxb "org.jvnet.jaxb2_commons:jaxb2-basics-tools:${jaxbBasicVersion}"
+
+    compile "org.jvnet.jaxb2_commons:jaxb2-basics:${jaxbBasicVersion}"
+    compile "org.jvnet.jaxb2_commons:jaxb2-basics-runtime:${jaxbBasicVersion}"
+    compile "org.jvnet.jaxb2_commons:jaxb2-basics-tools:${jaxbBasicVersion}"
+}
+
+task genJaxb << {
+
+    println configurations.jaxb.asPath
+    ant {
+        taskdef name: "xjc",
+                classname: "com.sun.tools.xjc.XJC2Task",
+                classpath: configurations.jaxb.asPath
+
+        println "About to compile the XSD"
+        mkdir(dir: generatedXSDSourcesDir)
+        xjc(destdir: generatedXSDSourcesDir, extension:"true") {
+            arg(line:'-Xequals -XhashCode -XtoString -Xcopyable -npa')
+            schema(dir: "${schemaDir}", includes: schemas.join(' '))
+            binding(dir: "${projectDir}/src/main/resources/xsd/2014/04/14/"){
+                include(name:'*.xjb')
+            }
+            produces(dir: generatedXSDSourcesDir, includes: "**/*.java")
+        }
+
+        println "About to compile the WSDL"
+        mkdir(dir: generatedWSDLSourcesDir)
+        xjc(destdir: generatedWSDLSourcesDir, extension:"true", removeOldOutput: "false") {
+            arg(line:'-Xequals -XhashCode -XtoString -Xcopyable -npa -wsdl')
+            schema(dir: "${wsdlDir}", includes: wsdls.join(' '))
+            produces(dir: generatedWSDLSourcesDir, includes: "**/*.java")
+        }
+    }
+}
+
+compileJava{
+    source sourceSets.main.java
+    dependsOn genJaxb
+}
